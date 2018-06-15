@@ -1,0 +1,6 @@
+.message-list {
+    text-align: center;
+    margin-left: 25%;
+    overflow: auto;
+    border: 1px dotted green;
+}

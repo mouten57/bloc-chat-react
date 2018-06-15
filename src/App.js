@@ -14,31 +14,16 @@ var config = {
 };
 firebase.initializeApp(config);
 
-const sideNavStyle = {
-  width: '25%',
-  minWidth: '170px',
-  height: '100%',
-  backgroundColor: 'lightGrey',
-  position: 'fixed!important',
-  zIndex: '1',
-  overflow: 'auto',
-}
-const appStyle = {
-  height: '550px',
-  border: '1px dotted grey'
-}
-
 class App extends Component {
   render() {
     return (
-      <div className="App" style={appStyle}>
-        <div style={sideNavStyle} className="sidebarNav">
-          <RoomList
-            firebase = {firebase}
-          />
-        
-        </div>  
-        <MessageList /> 
+      <div className="App">
+        <div>
+          <RoomList firebase = {firebase}/>
+        </div>
+        <div>
+          <MessageList firebase = {firebase}/>  
+        </div>
       </div>
     );
   }
