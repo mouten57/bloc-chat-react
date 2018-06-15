@@ -12,7 +12,7 @@ class MessageList extends Component {
             roomId: ""
 
         }
-        this.roomsRef = this.props.firebase.database().ref('rooms');
+        this.roomsRef = this.props.firebase.database().ref('messages');
     }
     componentDidMount() {
         this.roomsRef.on('child_added', snapshot => {

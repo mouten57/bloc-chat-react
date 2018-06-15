@@ -7,7 +7,8 @@ class RoomList extends Component {
 
         this.state = {
            rooms: [],
-           newRoom: '', 
+           newRoom: '',
+           roomName: "", 
         };
         this.roomsRef = this.props.firebase.database().ref('rooms');
         console.log(this.roomsRef);
@@ -51,21 +52,26 @@ class RoomList extends Component {
 
         return this.props.firebase.database().ref().update(updates);
     }
-
+    
+    
 
     render() {
 
         return (
             <div className="side-nav">
-                <h1 className="side-nav-header">Bloc Chat</h1>
+                <h4 className="side-nav-header">Select a Room:</h4>
             {
                 this.state.rooms.map( (room, index) =>    
                 <div key={index}>
-                    <p className="room-number">{room.name}</p>
+                    <p 
+                    className="room-number"
+                    onClick={this.props.selectRoom}
+                    >{room.name}</p>
                 </div>
                 )
             }
-                <div>
+                <div className="create-form">
+                    Create a New Room:
                     <input type="text" onChange={this.updateInput}></input>
                     <input type="submit" onClick={this.handleSubmit} ></input>
                 </div>
