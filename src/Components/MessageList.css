@@ -1,6 +1,10 @@
-.message-list {
+.message-list-div {
     text-align: center;
     margin-left: 25%;
     overflow: auto;
     border: 1px dotted green;
+}
+
+.message-list {
+    list-style-type: none;
 }

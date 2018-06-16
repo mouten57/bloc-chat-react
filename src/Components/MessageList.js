@@ -5,17 +5,17 @@ class MessageList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            messages: [],
-            username: "",
-            content: "",
-            sentAt:"",
-            roomId: ""
-
+            allMessages: [],
+            displayedMessages: [],
+            newMessage: '',
         }
-        this.roomsRef = this.props.firebase.database().ref('messages');
+        this.messagesRef = this.props.firebase.database().ref('messages');
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
     }
     componentDidMount() {
-        this.roomsRef.on('child_added', snapshot => {
+        this.messagesRef.on('child_added', snapshot => {
             //events registered using 'on' method
             //snapshot.val recieves snapshot object (actual data)
             const message = snapshot.val();
@@ -25,18 +25,55 @@ class MessageList extends Component {
             // console.log(message.key);
             //concat merges/adds items to array and 
             //returns new array w/out changing existing array
-            let newMessages = this.state.messages.concat( message );
-            this.setState({ messages: newMessages })
+            let newMessages = this.state.allMessages.concat( message );
+            this.setState({ allMessages: newMessages }, () => {
+            this.updateDisplayedMessages;
+            })
+            console.log('abc'+ message.key)
             // console.log(this.state.messages.concat( message ));
             //array of objects. each room is an object
             //index 0: {name: 'room1', key:'1'}
         });
     }
+    handleSubmit(){
+        var submitData = {
+            content: this.state.newMessage,
+            sentAt: Date.now(),
+            roomId: this.props.activeRoom,
+        };
+        var newMessageKey = this.messagesRef.push().key;
+
+        var updates = {};
+        updates['/messages/' + newMessageKey] = submitData;
+        this.setState({ newMessage: ''});
+        return this.props.firebase.database().ref().update(updates);
+    }
+
+    updateDisplayedMessages() {
+        this.setState({ displayedMessages: this.state.allMessages})
+    }
+
+    handleChange(event) {
+        let newMSG = event.target.value;
+        this.setState({newMessage: newMSG})
+    }
 
     render () {
         return(
-            <div className="message-list">
-                <h1>YO</h1>
+            <div className="message-list-div">
+                <ul className="message-list">
+                    {this.state.allMessages.map( message =>
+                    <li key={message.key}>
+                        <div className="content">
+                        {message.content} from: {message.username} at: {message.sentAt}
+                        </div>
+                    </li>
+                    )}
+                </ul>
+                <form onSubmit={ (e) => { e.preventDefault(); this.handleSubmit(this.state.newMessage) } }>
+                    <input type="text" onChange={this.handleChange} value={this.state.newMessage}  />
+                    <input type="submit"/>
+                </form>
             </div>
         );
     }

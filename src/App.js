@@ -26,8 +26,8 @@ class App extends Component {
   selectRoom(event) {
     console.log(event.currentTarget.textContent)
     this.setState({activeRoom: event.currentTarget.textContent});
-}
-  
+  }
+   
   render() {
     return (
       <div className="App">
@@ -41,7 +41,9 @@ class App extends Component {
           <h4 className="current-room">Current Room: 
             <div className='room-title'>{this.state.activeRoom}</div>
           </h4>
-          <MessageList firebase = {firebase}/>  
+          <MessageList 
+            firebase = {firebase}
+            activeRoom={this.state.activeRoom} />  
         </div>
       </div>
     );
