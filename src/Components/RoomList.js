@@ -5,10 +5,13 @@ class RoomList extends Component {
         super(props);
 
         this.state = {
-           rooms: [], 
+           rooms: [],
+           newRoom: '', 
         };
         this.roomsRef = this.props.firebase.database().ref('rooms');
         console.log(this.roomsRef);
+        this.updateInput = this.updateInput.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -23,10 +26,30 @@ class RoomList extends Component {
             //concat merges/adds items to array and 
             //returns new array w/out changing existing array
             this.setState({ rooms: this.state.rooms.concat( room ) })
-            console.log(this.state.rooms.concat( room ));
             //array of objects. each room is an object
             //index 0: {name: 'room1', key:'1'}
+            console.log(this.state.rooms)
         });
+        
+    }   
+    //keeps track of input in state    
+    updateInput(event){
+        let newRoom = event.target.value;
+        this.setState({newRoom : newRoom})
+        }
+        
+    //does something with the value from text input    
+    handleSubmit(){
+        var submitData = {
+            name: this.state.newRoom,
+        };
+        var newRoomKey = this.roomsRef.push().key;
+
+        var updates = {};
+        updates['/rooms/' + newRoomKey] = submitData;
+        
+        this.setState({ newRoom: ''});
+        return this.props.firebase.database().ref().update(updates);
     }
 
     render() {
@@ -37,12 +60,19 @@ class RoomList extends Component {
             {
                 this.state.rooms.map( (room, index) =>    
                 <div key={index}>
-                    <p className="room-number">{room.name}</p>
+                    <p 
+                    className="room-number">{room.name}</p>
                 </div>
                 )
-    
             }
+           
+                <div>
+                    <input type="text" onChange={this.updateInput} value={this.state.newRoom}></input>
+                    <input type="submit" onClick={this.handleSubmit} ></input>
+                </div>
             </div>
+            
+            
         );
     }
 }
