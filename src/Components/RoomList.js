@@ -47,7 +47,8 @@ class RoomList extends Component {
 
         var updates = {};
         updates['/rooms/' + newRoomKey] = submitData;
-
+        
+        this.setState({ newRoom: ''});
         return this.props.firebase.database().ref().update(updates);
     }
 
@@ -68,7 +69,7 @@ class RoomList extends Component {
             }
            
                 <div>
-                    <input type="text" onChange={this.updateInput}></input>
+                    <input type="text" onChange={this.updateInput} value={this.state.newRoom}></input>
                     <input type="submit" onClick={this.handleSubmit} ></input>
                 </div>
             </div>
