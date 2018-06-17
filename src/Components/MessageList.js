@@ -5,13 +5,12 @@ class MessageList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            allMessages: [],
-            displayedMessages: [],
+            Messages: [],
             newMessage: '',
         }
         this.messagesRef = this.props.firebase.database().ref('messages');
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleMessageInput = this.handleMessageInput.bind(this);
+        this.handleSubmitNewMessage = this.handleSubmitNewMessage.bind(this);
 
     }
     componentDidMount() {
@@ -25,55 +24,66 @@ class MessageList extends Component {
             // console.log(message.key);
             //concat merges/adds items to array and 
             //returns new array w/out changing existing array
-            let newMessages = this.state.allMessages.concat( message );
-            this.setState({ allMessages: newMessages }, () => {
-            this.updateDisplayedMessages;
+            let newMessages = this.state.Messages.concat( message );
+            this.setState({ Messages: newMessages }, () => {
+            this.scrollToBottom();
             })
-            console.log('abc'+ message.key)
-            // console.log(this.state.messages.concat( message ));
-            //array of objects. each room is an object
-            //index 0: {name: 'room1', key:'1'}
         });
     }
-    handleSubmit(){
+
+    componentDidUpdate() {
+        this.scrollToBottom();
+      }
+
+    scrollToBottom = () => {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+      }
+
+    handleSubmitNewMessage(){
         var submitData = {
             content: this.state.newMessage,
-            sentAt: Date.now(),
-            roomId: this.props.activeRoom,
+            sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
+            roomId: this.props.activeRoomKey,
+            username: this.props.username,
         };
         var newMessageKey = this.messagesRef.push().key;
-
         var updates = {};
         updates['/messages/' + newMessageKey] = submitData;
         this.setState({ newMessage: ''});
         return this.props.firebase.database().ref().update(updates);
     }
 
-    updateDisplayedMessages() {
-        this.setState({ displayedMessages: this.state.allMessages})
-    }
-
-    handleChange(event) {
+    handleMessageInput(event) {
         let newMSG = event.target.value;
         this.setState({newMessage: newMSG})
     }
 
     render () {
         return(
-            <div className="message-list-div">
+            <div 
+                className="message-list-div"
+                >
                 <ul className="message-list">
-                    {this.state.allMessages.map( message =>
+                    {this.state.Messages.map( message =>
                     <li key={message.key}>
-                        <div className="content">
-                        {message.content} from: {message.username} at: {message.sentAt}
+                        <div 
+                        className="content"
+                        ref={(el)=> {this.messagesEnd = el; }}>
+                        {message.content}<br/>
+                        From: {message.username}<br/>
+                        Time: {message.sentAt}<br/>
+                        Room Key: {message.roomId}<br/><br/>
                         </div>
                     </li>
                     )}
                 </ul>
-                <form onSubmit={ (e) => { e.preventDefault(); this.handleSubmit(this.state.newMessage) } }>
-                    <input type="text" onChange={this.handleChange} value={this.state.newMessage}  />
-                    <input type="submit"/>
-                </form>
+                <div id="message-submit">
+                    <form id="message-form"
+                        onSubmit={ (e) => { e.preventDefault(); this.handleSubmitNewMessage(this.state.newMessage) }}>
+                        <input type="text" onChange={this.handleMessageInput} value={this.state.newMessage} placeholder="Enter a message.." />
+                        <input type="submit"/>
+                    </form>
+                </div>
             </div>
         );
     }
