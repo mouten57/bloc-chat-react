@@ -2,9 +2,30 @@
     text-align: center;
     margin-left: 25%;
     overflow: auto;
-    border: 1px dotted green;
+    position: relative;
+    z-index: 1;
+    /* border: 1px dotted green; */
 }
 
 .message-list {
+    margin-top: 60px;
     list-style-type: none;
+    padding-left: 0;
+    margin-bottom: 30px;
+}
+
+#message-submit {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 10px;
+    width: 75%;
+    background-color: #e0ebfc;
+    margin-bottom: 0;
+}
+
+#message-form {
+    margin-top: 10px;
 }

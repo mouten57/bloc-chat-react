@@ -18,33 +18,42 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeRoom: "Room 1",
+      activeRoom: "",
+      activeRoomKey: "",
     }
     this.selectRoom=this.selectRoom.bind(this);
   }
 
-  selectRoom(event) {
-    console.log(event.currentTarget.textContent)
-    this.setState({activeRoom: event.currentTarget.textContent});
-  }
-   
+  selectRoom(room) {
+    // this.setState({ activeRoom: e.currentTarget.textContent });
+    let activeRoomKey = room.key;
+    let activeRoom = room.name;
+    this.setState({ activeRoom : activeRoom});
+    this.setState({ activeRoomKey: activeRoomKey });
+    console.log(activeRoomKey+": "+ activeRoom)
+}
+
   render() {
     return (
       <div className="App">
         <div>
           <RoomList 
           firebase = {firebase}
+          activeRoom={this.state.activeRoom}
           selectRoom={this.selectRoom}
           />
         </div>
-        <div>
-          <h4 className="current-room">Current Room: 
-            <div className='room-title'>{this.state.activeRoom}</div>
-          </h4>
+        <div id='current-room'>
+          <h4 className="current-room">Current Room: </h4>
+          <h4 className='room-title'>{this.state.activeRoom}</h4>
+        </div>
+        <div>  
           <MessageList 
             firebase = {firebase}
-            activeRoom={this.state.activeRoom} />  
-        </div>
+            activeRoom={this.state.activeRoom}
+            username='matt'
+            activeRoomKey={this.state.activeRoomKey} />  
+          </div>
       </div>
     );
   }

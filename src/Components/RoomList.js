@@ -10,7 +10,6 @@ class RoomList extends Component {
            newRoom: '', 
         };
         this.roomsRef = this.props.firebase.database().ref('rooms');
-        console.log(this.roomsRef);
         this.updateInput = this.updateInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -29,37 +28,17 @@ class RoomList extends Component {
             this.setState({ rooms: this.state.rooms.concat( room ) })
             //array of objects. each room is an object
             //index 0: {name: 'room1', key:'1'}
-            console.log(this.state.rooms)
-        });
-        
-    }   
-    //keeps track of input in state    
-    updateInput(event){
-        let newRoom = event.target.value;
-        this.setState({newRoom : newRoom})
-        }
-        
-    //does something with the value from text input    
-    handleSubmit(){
-        var submitData = {
-            name: this.state.newRoom,
-        };
-        var newRoomKey = this.roomsRef.push().key;
-
-        var updates = {};
-        updates['/rooms/' + newRoomKey] = submitData;
-        
-        this.setState({ newRoom: ''});
-        return this.props.firebase.database().ref().update(updates);
+            ////////
+            }); 
     }
 
-    //keeps track of input in state    
+    //keeps track of input in state  (new room data)  
     updateInput(event){
         let newRoom = event.target.value;
         this.setState({newRoom : newRoom})
         }
 
-        //does something with the value from text input    
+        //pushes new room data to firebase and clears form input   
     handleSubmit(){
         var submitData = {
             name: this.state.newRoom,
@@ -71,9 +50,6 @@ class RoomList extends Component {
         this.setState({ newRoom: ''});
         return this.props.firebase.database().ref().update(updates);
     }
-    
-    
-
     render() {
 
         return (
@@ -84,7 +60,7 @@ class RoomList extends Component {
                 <div key={room.key}>
                     <p 
                     className="room-number"
-                    onClick={this.props.selectRoom}
+                    onClick={(e) => this.props.selectRoom(room, e)}
                     >{room.name}</p>
                 </div>
                 )
