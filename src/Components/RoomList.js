@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './RoomList.css'
 
 class RoomList extends Component {
     constructor(props) {
@@ -6,7 +7,11 @@ class RoomList extends Component {
 
         this.state = {
            rooms: [],
+<<<<<<< HEAD
            newRoom: '', 
+=======
+           newRoom: '',
+>>>>>>> list-messages
         };
         this.roomsRef = this.props.firebase.database().ref('rooms');
         console.log(this.roomsRef);
@@ -19,10 +24,10 @@ class RoomList extends Component {
             //events registered using 'on' method
             //snapshot.val recieves snapshot object (actual data)
             const room = snapshot.val();
-            console.log(room);
+            // console.log(room);
             //snapshot.key contain's object key
             room.key = snapshot.key;
-            console.log(room.key);
+            // console.log(room.key);
             //concat merges/adds items to array and 
             //returns new array w/out changing existing array
             this.setState({ rooms: this.state.rooms.concat( room ) })
@@ -52,21 +57,44 @@ class RoomList extends Component {
         return this.props.firebase.database().ref().update(updates);
     }
 
+    //keeps track of input in state    
+    updateInput(event){
+        let newRoom = event.target.value;
+        this.setState({newRoom : newRoom})
+        }
+
+        //does something with the value from text input    
+    handleSubmit(){
+        var submitData = {
+            name: this.state.newRoom,
+        };
+        var newRoomKey = this.roomsRef.push().key;
+
+        var updates = {};
+        updates['/rooms/' + newRoomKey] = submitData;
+        this.setState({ newRoom: ''});
+        return this.props.firebase.database().ref().update(updates);
+    }
+    
+    
+
     render() {
 
         return (
-            <div>
-                <h1 className="side-nav-header">Bloc Chat</h1>
+            <div className="side-nav">
+                <h4 className="side-nav-header">Select a Room:</h4>
             {
-                this.state.rooms.map( (room, index) =>    
-                <div key={index}>
+                this.state.rooms.map( room =>    
+                <div key={room.key}>
                     <p 
-                    className="room-number">{room.name}</p>
+                    className="room-number"
+                    onClick={this.props.selectRoom}
+                    >{room.name}</p>
                 </div>
                 )
             }
-           
-                <div>
+                <div className="create-form">
+                    Create a New Room:
                     <input type="text" onChange={this.updateInput} value={this.state.newRoom}></input>
                     <input type="submit" onClick={this.handleSubmit} ></input>
                 </div>

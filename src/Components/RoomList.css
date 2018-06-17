@@ -1,0 +1,20 @@
+.side-nav  {
+    width: 25%;
+    height: 100%;
+    background-color: lightGrey;
+    position: fixed!important;
+    z-index: 1;
+    overflow: auto;
+  }
+
+  .create-form {
+      margin-top: 50%;
+      padding-top: 5px;
+  }
+  .create-form input {
+      margin: 5px;
+  }
+
+  .side-nav-header {
+      text-decoration: underline;
+  }
