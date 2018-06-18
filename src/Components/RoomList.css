@@ -18,3 +18,7 @@
   .side-nav-header {
       text-decoration: underline;
   }
+
+  #room-sub {
+      margin-top: 0px;
+  }
