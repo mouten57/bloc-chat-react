@@ -18,43 +18,36 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeRoom: "Room 1",
-      activeRoomKey: "1",
-    }
-    this.selectRoom=this.selectRoom.bind(this);
+      activeRoom: '',
+    };
   }
-
+  
   //takes selected room from onClick in RoomList.js (from map function)
-  selectRoom(room) {
-    //save key to add to message sent in messageList.js
-    let activeRoomKey = room.key;
-    let activeRoom = room.name;
-    //update states
-    this.setState({ activeRoom : activeRoom});
-    this.setState({ activeRoomKey: activeRoomKey });
-}
+  selectRoom = (room) => {
+    this.setState({ activeRoom: room });
+  }
 
   render() {
     return (
       <div className="App">
         <div>
-          <RoomList 
-          firebase = {firebase}
-          activeRoom={this.state.activeRoom}
-          selectRoom={this.selectRoom}
+          <RoomList
+            firebase = {firebase}
+            activeRoom={this.state.activeRoom}
+            selectRoom={this.selectRoom}
           />
         </div>
         <div id='current-room'>
           <h4 className="current-room">Current Room: </h4>
-          <h4 className='room-title'>{this.state.activeRoom}</h4>
+          <h4 className='room-title'>{this.state.activeRoom.name}</h4>
         </div>
-        <div>  
-          <MessageList 
-            firebase = {firebase}
-            activeRoom={this.state.activeRoom}
-            username='matt' //will change in future
-            activeRoomKey={this.state.activeRoomKey} />  
-          </div>
+        <div>
+        <MessageList
+          firebase = {firebase}
+          activeRoom={this.state.activeRoom}
+          username='matt' //will change in future
+        />
+        </div>
       </div>
     );
   }
