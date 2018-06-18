@@ -4,7 +4,7 @@
     overflow: auto;
     position: relative;
     z-index: 1;
-    /* border: 1px dotted green; */
+    border: 1px dotted green;
 }
 
 .message-list {
@@ -14,7 +14,7 @@
     margin-bottom: 30px;
 }
 
-#message-submit {
+#message-bar {
     position: fixed;
     right: 0;
     bottom: 0;
@@ -24,8 +24,26 @@
     width: 75%;
     background-color: #e0ebfc;
     margin-bottom: 0;
+    display: inline-block;
+    
 }
 
-#message-form {
+#message-input {
+    width: 75%;
+    height: 20px;
     margin-top: 10px;
 }
+#msg-sub {
+    margin-top: 10px;
+    margin-left: 5px;
+}
+#msg-sub:hover {
+    color: blue;
+    background-color: #d3d3d3;
+}
+
+/* ::placeholder{
+    color: white;
+    text-align: center;
+    opacity: 1;
+} */

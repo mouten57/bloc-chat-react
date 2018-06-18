@@ -18,19 +18,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeRoom: "",
-      activeRoomKey: "",
+      activeRoom: "Room 1",
+      activeRoomKey: "1",
     }
     this.selectRoom=this.selectRoom.bind(this);
   }
 
+  //takes selected room from onClick in RoomList.js (from map function)
   selectRoom(room) {
-    // this.setState({ activeRoom: e.currentTarget.textContent });
+    //save key to add to message sent in messageList.js
     let activeRoomKey = room.key;
     let activeRoom = room.name;
+    //update states
     this.setState({ activeRoom : activeRoom});
     this.setState({ activeRoomKey: activeRoomKey });
-    console.log(activeRoomKey+": "+ activeRoom)
 }
 
   render() {
@@ -51,7 +52,7 @@ class App extends Component {
           <MessageList 
             firebase = {firebase}
             activeRoom={this.state.activeRoom}
-            username='matt'
+            username='matt' //will change in future
             activeRoomKey={this.state.activeRoomKey} />  
           </div>
       </div>

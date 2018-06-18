@@ -5,13 +5,11 @@ class MessageList extends Component {
     constructor(props){
         super(props);
         this.state = {
-            Messages: [],
+            allMessages: [],
+            roomMessages: [],
             newMessage: '',
         }
-        this.messagesRef = this.props.firebase.database().ref('messages');
-        this.handleMessageInput = this.handleMessageInput.bind(this);
-        this.handleSubmitNewMessage = this.handleSubmitNewMessage.bind(this);
-
+        this.messagesRef = this.props.firebase.database().ref('messages/');
     }
     componentDidMount() {
         this.messagesRef.on('child_added', snapshot => {
@@ -24,22 +22,24 @@ class MessageList extends Component {
             // console.log(message.key);
             //concat merges/adds items to array and 
             //returns new array w/out changing existing array
-            let newMessages = this.state.Messages.concat( message );
-            this.setState({ Messages: newMessages }, () => {
+            let messages = this.state.allMessages.concat( message );
+            this.setState({ allMessages: messages });
+            let msgIds = this.state.allMessages.map(msg => 
+            msg.roomId)
+            console.log(msgIds) 
+            // console.log(roomMessages.filter(msg=> msg===this.props.activeRoomKey))
             this.scrollToBottom();
-            })
-        });
-    }
-
+              });
+          }
     componentDidUpdate() {
         this.scrollToBottom();
+        // this.updateMessages();
       }
-
     scrollToBottom = () => {
+        if (this.state.allMessages.length===0) {return}
         this.messagesEnd.scrollIntoView({ behavior: "smooth" });
       }
-
-    handleSubmitNewMessage(){
+    handleSubmitNewMessage = () => {
         var submitData = {
             content: this.state.newMessage,
             sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
@@ -49,22 +49,23 @@ class MessageList extends Component {
         var newMessageKey = this.messagesRef.push().key;
         var updates = {};
         updates['/messages/' + newMessageKey] = submitData;
-        this.setState({ newMessage: ''});
-        return this.props.firebase.database().ref().update(updates);
+        if (submitData.content.length > 1){
+            this.setState({ newMessage: ''});
+            return this.props.firebase.database().ref().update(updates);}
+        else {alert('Message must be at least 1 character.')}
     }
-
-    handleMessageInput(event) {
+    handleMessageInput = (event) => {
         let newMSG = event.target.value;
         this.setState({newMessage: newMSG})
     }
+    updateMessages = () => {
 
+    }
     render () {
         return(
-            <div 
-                className="message-list-div"
-                >
+            <div className="message-list-div">
                 <ul className="message-list">
-                    {this.state.Messages.map( message =>
+                    {this.state.allMessages.map( message =>
                     <li key={message.key}>
                         <div 
                         className="content"
@@ -77,11 +78,11 @@ class MessageList extends Component {
                     </li>
                     )}
                 </ul>
-                <div id="message-submit">
+                <div id="message-bar">
                     <form id="message-form"
                         onSubmit={ (e) => { e.preventDefault(); this.handleSubmitNewMessage(this.state.newMessage) }}>
-                        <input type="text" onChange={this.handleMessageInput} value={this.state.newMessage} placeholder="Enter a message.." />
-                        <input type="submit"/>
+                        <input id='message-input' type="text" onChange={this.handleMessageInput} value={this.state.newMessage} placeholder="Enter a message.." />
+                        <input type="submit" id='msg-sub'/>
                     </form>
                 </div>
             </div>
