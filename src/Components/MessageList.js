@@ -11,6 +11,7 @@ class MessageList extends Component {
     }
     this.messagesRef = this.props.firebase.database().ref('messages/');
   }
+  //triggered when parent state changes (prop that's passed changes)
   componentWillReceiveProps(nextProps) {
     this.updateDisplayedMessages(nextProps.activeRoom);
   }
@@ -26,6 +27,8 @@ class MessageList extends Component {
       //concat merges/adds items to array and 
       //returns new array w/out changing existing array
       let messages = this.state.allMessages.concat( message );
+      //setState of allMessages on mount
+      //after state update, update displayed messages and scroll to bottom
       this.setState({ allMessages: messages },
         () => {
           this.updateDisplayedMessages(this.props.activeRoom);
@@ -34,8 +37,8 @@ class MessageList extends Component {
       });
       this.scrollToBottom();
     }
-    scrollToBottom = () => {
-      this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
     }
   handleSubmitNewMessage = (newMessage) => {
     var submitData = {
@@ -56,6 +59,10 @@ class MessageList extends Component {
     let newMSG = event.target.value;
     this.setState({newMessage: newMSG})
   }
+  //takes activeRoom from componentwillreceiveprops on props change(active room change)
+  //also takes activeRoom from componentDidMount on room load
+  //filters messages to only those that match correct room, then sets state
+  //finally, scrolls to bottom
   updateDisplayedMessages=(activeRoom)=> {
     this.setState(
       {

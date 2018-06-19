@@ -10,43 +10,46 @@ class RoomList extends Component {
            newRoom: '', 
         };
         this.roomsRef = this.props.firebase.database().ref('rooms');
-        this.updateInput = this.updateInput.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
-
     componentDidMount() {
         this.roomsRef.on('child_added', snapshot => {
             //events registered using 'on' method
-            //snapshot.val recieves snapshot object (actual data)
+            //snapshot.val recieves snapshot (room object data)
             const room = snapshot.val();
-            // console.log(room);
             //snapshot.key contain's object key
             room.key = snapshot.key;
-            // console.log(room.key);
             //concat merges/adds items to array and 
             //returns new array w/out changing existing array
             this.setState({ rooms: this.state.rooms.concat( room ) })
+            //stops loading at 1 and sets first room to activeRoom
+            //only calls once
+            if (this.state.rooms.length === 1) {
+                this.props.selectRoom(room);
+              }
             //array of objects. each room is an object
             //index 0: {name: 'room1', key:'1'}
             ////////
             }); 
     }
-
     //keeps track of input in state  (new room data)  
-    updateInput(event){
+    updateInput = (event) => {
         let newRoom = event.target.value;
         this.setState({newRoom : newRoom})
         }
-
-        //pushes new room data to firebase and clears form input   
-    handleSubmit(){
+        //pushes new room data to firebase and clears form input  
+    handleSubmit = (newRoom) => {
         var submitData = {
-            name: this.state.newRoom,
+            name: newRoom,
         };
         var newRoomKey = this.roomsRef.push().key;
-
         var updates = {};
         updates['/rooms/' + newRoomKey] = submitData;
+        //updates the room that was submitted to activeRoom
+        let onSubmitNewRoom = {
+            name: newRoom,
+            key: newRoomKey
+        }
+        this.props.selectRoom(onSubmitNewRoom);
         this.setState({ newRoom: ''});
         return this.props.firebase.database().ref().update(updates);
     }
@@ -65,11 +68,13 @@ class RoomList extends Component {
                 </div>
                 )
             }
-                <div className="create-form">
+                <form 
+                    className="create-form"
+                    onSubmit={(e) => { e.preventDefault(); this.handleSubmit(this.state.newRoom); }}>
                     Create a New Room:
-                    <input type="text" onChange={this.updateInput} value={this.state.newRoom}></input>
-                    <input type="submit" onClick={this.handleSubmit} ></input>
-                </div>
+                    <input id="room-txt" type="text" onChange={this.updateInput} value={this.state.newRoom}></input>
+                    <input id="room-sub" type="submit"></input>
+                </form>
             </div>
             
             

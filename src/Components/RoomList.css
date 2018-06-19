@@ -1,3 +1,6 @@
+.side-nav-header {
+    text-decoration: underline;
+}
 .side-nav  {
     width: 25%;
     height: 100%;
@@ -8,17 +11,22 @@
   }
 
   .create-form {
-      margin-top: 50%;
+      text-align: center;
+      margin-top: 40%;
       padding-top: 5px;
+      display: block;
   }
-  .create-form input {
-      margin: 5px;
+#room-txt {
+      display: block;
+      width: 80%;
+      padding: 1px;
+      margin: auto;
+      margin-top: 5px;
+      max-width: 140px;
   }
-
-  .side-nav-header {
-      text-decoration: underline;
-  }
-
   #room-sub {
-      margin-top: 0px;
+      display: block;
+      margin: auto;
+      padding: 5px;
+      margin-top: 5px;
   }
