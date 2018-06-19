@@ -45,7 +45,7 @@ class MessageList extends Component {
         content: newMessage,
         sentAt: this.props.firebase.database.ServerValue.TIMESTAMP,
         roomId: this.props.activeRoom.key,
-        username: this.props.username,
+        username: this.props.user.displayName,
     };
     var newMessageKey = this.messagesRef.push().key;
     var updates = {};
@@ -84,7 +84,7 @@ class MessageList extends Component {
                     {message.content}<br/>
                     From: {message.username}<br/>
                     Time: {message.sentAt}<br/>
-                    Room Key: {message.roomId}<br/><br/>
+                    <br/>
                 </div>
             </li>
           )}
