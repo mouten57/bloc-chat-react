@@ -30,6 +30,11 @@ class RoomList extends Component {
             //index 0: {name: 'room1', key:'1'}
             ////////
             }); 
+            this.roomsRef.on("child_removed", snapshot => {
+                this.setState({
+                  rooms: this.state.rooms.filter(room => room.key !== snapshot.key)
+                });
+              });
     }
     //keeps track of input in state  (new room data)  
     updateInput = (event) => {
@@ -53,6 +58,10 @@ class RoomList extends Component {
         this.setState({ newRoom: ''});
         return this.props.firebase.database().ref().update(updates);
     }
+    removeRoom = (room) => {
+        this.roomsRef.child(room.key).remove();
+        this.props.selectRoom(this.state.rooms[this.state.rooms.length -2]);
+      }
     render() {
 
         return (
@@ -65,6 +74,7 @@ class RoomList extends Component {
                     className="room-number"
                     onClick={(e) => this.props.selectRoom(room, e)}
                     >{room.name}</p>
+                    <button onClick={() => this.removeRoom(room)}>-</button>
                 </div>
                 )
             }
