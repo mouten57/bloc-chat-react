@@ -30,3 +30,10 @@
       padding: 5px;
       margin-top: 5px;
   }
+  .delete-room-button {
+      display: inline-block;
+      margin-left: 5px;
+  }
+  .room-number {
+      display: inline-block
+  }

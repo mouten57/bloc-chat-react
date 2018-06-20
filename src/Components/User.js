@@ -19,9 +19,9 @@ class User extends Component {
     render () {
         return(
             <div id="sign-in-out">
-                <button onClick={() => this.signIn()}>Sign In</button>
-                <button onClick={() => this.signOut()}>Sign Out</button>
-                <div id='username-display'>Username: {this.props.user ? this.props.user.displayName : "Guest" }</div>
+                <button onClick={() => this.props.user ? this.signOut(): this.signIn()}>
+                        {this.props.user ? "Sign Out" : "Sign In"}
+                </button>
             </div>
         );}
 }

@@ -74,7 +74,9 @@ class RoomList extends Component {
                     className="room-number"
                     onClick={(e) => this.props.selectRoom(room, e)}
                     >{room.name}</p>
-                    <button onClick={() => this.removeRoom(room)}>-</button>
+                    <button 
+                        className="delete-room-button"
+                        onClick={() => this.removeRoom(room)}>-</button>
                 </div>
                 )
             }

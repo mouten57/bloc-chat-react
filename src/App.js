@@ -45,8 +45,10 @@ class App extends Component {
           />
         </div>
         <div id='current-room'>
-          <h4 className="current-room">Current Room: </h4>
-          <h4 className='room-title'>{this.state.activeRoom.name}</h4>
+          <ul className="top-display">
+            <li className="current-room">Current Room: <p className='room-title'>{this.state.activeRoom.name}</p></li>
+            <li id='username-display'>Username: <b>{this.state.user ? this.state.user.displayName : "Guest" }</b></li>
+          </ul>
           <User 
             firebase = {firebase}
             setUser = {this.setUser}
