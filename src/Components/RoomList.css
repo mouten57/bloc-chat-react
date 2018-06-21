@@ -33,7 +33,10 @@
   .delete-room-button {
       display: inline-block;
       margin-left: 5px;
+
   }
   .room-number {
-      display: inline-block
+      display: inline-block;
+      margin: 0 auto;
+      padding-bottom: 5px;
   }

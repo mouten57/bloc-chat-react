@@ -54,13 +54,27 @@ class RoomList extends Component {
             name: newRoom,
             key: newRoomKey
         }
-        this.props.selectRoom(onSubmitNewRoom);
-        this.setState({ newRoom: ''});
-        return this.props.firebase.database().ref().update(updates);
-    }
-    removeRoom = (room) => {
+        let roomNames = [...this.state.rooms.map(room => room.name)];
+        if (roomNames.includes(newRoom)){
+            alert('Room name is already taken.')
+            this.setState({ newRoom: '' });
+        } else if (newRoom.length > 12){
+            alert('Please create a room name shorter than 12 characters.');
+            this.setState({ newRoom: ''});
+        } else {
+            this.props.selectRoom(onSubmitNewRoom);
+            this.setState({ newRoom: ''});
+            return this.props.firebase.database().ref().update(updates);}
+    } 
+      removeRoom = (room) => {
         this.roomsRef.child(room.key).remove();
-        this.props.selectRoom(this.state.rooms[this.state.rooms.length -2]);
+        var array = [...this.state.rooms];
+        var index = array.indexOf(room);
+        array.splice(index, 1);
+        this.setState({rooms: array})
+        this.state.rooms[index+1] ?
+            this.props.selectRoom(this.state.rooms[index+1]) :
+            this.props.selectRoom(this.state.rooms[index-1]);
       }
     render() {
 
@@ -72,7 +86,7 @@ class RoomList extends Component {
                 <div key={room.key}>
                     <p 
                     className="room-number"
-                    onClick={(e) => this.props.selectRoom(room, e)}
+                    onClick={() => this.props.selectRoom(room)}
                     >{room.name}</p>
                     <button 
                         className="delete-room-button"

@@ -19,9 +19,9 @@
 
 }
 
-#current-room {
+#current-room2 {
   z-index: 15;
-  height: 50px;
+  height: 59px;
   overflow: hidden;
   margin-left: 25%;
   width: 75%;
@@ -42,5 +42,6 @@
 }
 
 .top-display {
-  width: 100%
+  width: 50%;
+  padding-left: 0;
 }
