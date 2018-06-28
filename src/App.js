@@ -47,7 +47,7 @@ class App extends Component {
         <div id='current-room'>
           <div id='current-room2'>
             <ul className="top-display">
-              <li className="current-room">Current Room: <p className='room-title'>{this.state.activeRoom.name}</p></li>
+              <li className="current-room">Current Room: <p className='room-title'>{this.state.activeRoom ? this.state.activeRoom.name:''}</p></li>
               <li id='username-display'>Username: <b>{this.state.user ? this.state.user.displayName : "Guest" }</b></li>
             </ul>
               <User 

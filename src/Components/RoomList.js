@@ -67,11 +67,12 @@ class RoomList extends Component {
             return this.props.firebase.database().ref().update(updates);}
     } 
       removeRoom = (room) => {
-        this.roomsRef.child(room.key).remove();
+        if (this.state.rooms.length<2){return}
         var array = [...this.state.rooms];
         var index = array.indexOf(room);
         array.splice(index, 1);
         this.setState({rooms: array})
+        this.roomsRef.child(room.key).remove();
         this.state.rooms[index+1] ?
             this.props.selectRoom(this.state.rooms[index+1]) :
             this.props.selectRoom(this.state.rooms[index-1]);

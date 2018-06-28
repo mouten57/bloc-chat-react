@@ -64,7 +64,6 @@ class MessageList extends Component {
       
       // ie: 2013-02-18, 8:35 AM	
       time = mm + '/' + dd + '/' + yyyy + ', ' + h + ':' + min + ' ' + ampm;
-      console.log(time) 
       return time;
     }
   handleSubmitNewMessage = (newMessage) => {
@@ -74,11 +73,10 @@ class MessageList extends Component {
         roomId: this.props.activeRoom.key,
         username: this.props.user ? this.props.user.displayName : "Guest"
     };
-    console.log(Date.now())
     var newMessageKey = this.messagesRef.push().key;
     var updates = {};
     updates['/messages/' + newMessageKey] = submitData;
-    if (submitData.content.length > 1){
+    if (submitData.content.length >= 1){
         this.setState({ newMessage: ''});
         return this.props.firebase.database().ref().update(updates);}
     else {alert('Message must be at least 1 character.')}
