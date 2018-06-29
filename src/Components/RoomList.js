@@ -66,13 +66,27 @@ class RoomList extends Component {
             this.setState({ newRoom: ''});
             return this.props.firebase.database().ref().update(updates);}
     } 
+    // loop over messages
+    // check if message.roomKey === deletedRoom.key
+    // if true call the delete
+    // if false nothing
       removeRoom = (room) => {
         if (this.state.rooms.length<2){return}
         var array = [...this.state.rooms];
         var index = array.indexOf(room);
         array.splice(index, 1);
         this.setState({rooms: array})
-        this.roomsRef.child(room.key).remove();
+        this.roomsRef.child(room.key).remove().then(() => {
+            // check the browser console to see if this works... or throws an error if it is not a promise
+            for (let i=0; i<this.props.allMessages.length; i++) {
+            let message = this.props.allMessages[i];
+            if (message.roomId === room.key){
+                this.props.firebase.database().ref('messages/').child(message.key).remove();
+            }
+            }
+            console.log(`${room.key} removed`);
+           // if it is a promise we now could call remove on the messages
+         });
         this.state.rooms[index+1] ?
             this.props.selectRoom(this.state.rooms[index+1]) :
             this.props.selectRoom(this.state.rooms[index-1]);

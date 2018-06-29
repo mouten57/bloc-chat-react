@@ -29,6 +29,7 @@ class MessageList extends Component {
       let messages = this.state.allMessages.concat( message );
       //setState of allMessages on mount
       //after state update, update displayed messages and scroll to bottom
+      this.props.setMessages(messages);
       this.setState({ allMessages: messages },
         () => {
           this.updateDisplayedMessages(this.props.activeRoom);

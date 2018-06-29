@@ -21,6 +21,7 @@ class App extends Component {
     this.state = {
       activeRoom: '',
       user: '',
+      allMessages: '',
     };
   }
   
@@ -33,6 +34,11 @@ class App extends Component {
     this.setState({ user: user})
   };
 
+  setMessages = (messages) => {
+    this.setState({allMessages: messages})
+    console.log(this.state.allMessages)
+  }
+
  
   render() {
     return (
@@ -42,6 +48,7 @@ class App extends Component {
             firebase = {firebase}
             activeRoom={this.state.activeRoom}
             selectRoom={this.selectRoom}
+            allMessages={this.state.allMessages}
           />
         </div>
         <div id='current-room'>
@@ -61,6 +68,7 @@ class App extends Component {
           firebase = {firebase}
           activeRoom={this.state.activeRoom}
           user={this.state.user}
+          setMessages={this.setMessages}
         />
         </div>
       </div>
