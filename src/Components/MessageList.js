@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './MessageList.css';
+import styles from './MessageList.css';
 
 class MessageList extends Component {
   constructor(props){
@@ -102,8 +102,8 @@ class MessageList extends Component {
   }
   render () {
     return(
-      <div className="message-list-div">
-        <ul className="message-list">
+      <div className={styles.messageListDiv}>
+        <ul className={styles.messageList}>
           {/* //map roomMessages instead of allMessages */}
             {this.state.roomMessages.map( message => 
             <li key={message.key}>
@@ -118,11 +118,11 @@ class MessageList extends Component {
           {/* ref can't be in a map function ?? */}
           <div ref={(el) => (this.messagesEnd = el)}/>
           </ul>
-          <div id="message-bar">
-          <form id="message-form"
+          <div className={styles.messageBar}>
+          <form className={styles.messageForm}
             onSubmit={ (e) => { e.preventDefault(); this.handleSubmitNewMessage(this.state.newMessage) }}>
-          <input id='message-input' type="text" onChange={this.handleMessageInput} value={this.state.newMessage} placeholder="Enter a message.." />
-          <input type="submit" id='msg-sub'/>
+          <input className={styles.messageInput} type="text" onChange={this.handleMessageInput} value={this.state.newMessage} placeholder="Enter a message.." />
+          <input type="submit" className={styles.msgSub}/>
         </form>
       </div>
     </div>

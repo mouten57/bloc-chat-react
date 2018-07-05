@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './RoomList.css'
+import styles from './RoomList.css';
 
 class RoomList extends Component {
     constructor(props) {
@@ -94,27 +94,27 @@ class RoomList extends Component {
     render() {
 
         return (
-            <div className="side-nav">
-                <h4 className="side-nav-header">Select a Room:</h4>
+            <div className={styles.sideNav}>
+                <h4>Select a Room:</h4>
             {
                 this.state.rooms.map( room =>    
                 <div key={room.key}>
                     <p 
-                    className="room-number"
+                    className={styles.roomNumber}
                     onClick={() => this.props.selectRoom(room)}
                     >{room.name}</p>
                     <button 
-                        className="delete-room-button"
+                        className={styles.deleteRoomButton}
                         onClick={() => this.removeRoom(room)}>-</button>
                 </div>
                 )
             }
                 <form 
-                    className="create-form"
+                    className={styles.createForm}
                     onSubmit={(e) => { e.preventDefault(); this.handleSubmit(this.state.newRoom); }}>
                     Create a New Room:
-                    <input id="room-txt" type="text" onChange={this.updateInput} value={this.state.newRoom}></input>
-                    <input id="room-sub" type="submit"></input>
+                    <input id={styles.roomTxt} type="text" onChange={this.updateInput} value={this.state.newRoom}></input>
+                    <input className={styles.roomSub} type="submit"></input>
                 </form>
             </div>
             

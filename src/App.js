@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import styles from './App.css';
 import firebase from 'firebase';
 import RoomList from './Components/RoomList';
 import MessageList from './Components/MessageList';
@@ -42,7 +42,7 @@ class App extends Component {
  
   render() {
     return (
-      <div className="App">
+      <div className={styles.App}>
         <div>
           <RoomList
             firebase = {firebase}
@@ -51,11 +51,11 @@ class App extends Component {
             allMessages={this.state.allMessages}
           />
         </div>
-        <div id='current-room'>
-          <div id='current-room2'>
-            <ul className="top-display">
-              <li className="current-room">Current Room: <p className='room-title'>{this.state.activeRoom ? this.state.activeRoom.name:''}</p></li>
-              <li id='username-display'>Username: <b>{this.state.user ? this.state.user.displayName : "Guest" }</b></li>
+        <div>
+          <div className={styles.currentRoomDisplay}>
+            <ul className={styles.topDisplay}>
+              <li className={styles.currentRoom}>Current Room: <p className={styles.roomTitle}>{this.state.activeRoom ? this.state.activeRoom.name:''}</p></li>
+              <li className={styles.usernameDisplay}>Username: <b>{this.state.user ? this.state.user.displayName : "Guest" }</b></li>
             </ul>
               <User 
                 firebase = {firebase}

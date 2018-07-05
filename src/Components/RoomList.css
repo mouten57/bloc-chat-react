@@ -1,7 +1,7 @@
-.side-nav-header {
+/* .side-nav-header {
     text-decoration: underline;
-}
-.side-nav  {
+} */
+.sideNav  {
     width: 25%;
     height: 100%;
     background-color: lightGrey;
@@ -10,13 +10,27 @@
     overflow: auto;
   }
 
-  .create-form {
+  .sideNav h {
+    text-decoration: underline; 
+  }
+
+  .roomNumber {
+    display: inline-block;
+    margin: 0 auto;
+    padding-bottom: 5px;
+}
+
+.deleteRoomButton {
+    display: inline-block;
+    margin-left: 5px;
+}
+  .createForm {
       text-align: center;
       margin-top: 40%;
       padding-top: 5px;
       display: block;
   }
-#room-txt {
+.roomTxt {
       display: block;
       width: 80%;
       padding: 1px;
@@ -24,19 +38,11 @@
       margin-top: 5px;
       max-width: 140px;
   }
-  #room-sub {
+  .roomSub {
       display: block;
       margin: auto;
       padding: 5px;
       margin-top: 5px;
   }
-  .delete-room-button {
-      display: inline-block;
-      margin-left: 5px;
-
-  }
-  .room-number {
-      display: inline-block;
-      margin: 0 auto;
-      padding-bottom: 5px;
-  }
+  
+  
