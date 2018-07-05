@@ -54,8 +54,8 @@ class RoomList extends Component {
             name: newRoom,
             key: newRoomKey
         }
-        let roomNames = [...this.state.rooms.map(room => room.name)];
-        if (roomNames.includes(newRoom)){
+        let roomNames = [...this.state.rooms.map(room => room.name.toUpperCase())];
+        if (roomNames.includes(newRoom.toUpperCase())){
             alert('Room name is already taken.')
             this.setState({ newRoom: '' });
         } else if (newRoom.length > 12){
@@ -71,6 +71,7 @@ class RoomList extends Component {
     // if true call the delete
     // if false nothing
       removeRoom = (room) => {
+        this.roomsRef = this.props.firebase.database().ref('rooms');
         if (this.state.rooms.length<2){return}
         var array = [...this.state.rooms];
         var index = array.indexOf(room);
@@ -98,24 +99,29 @@ class RoomList extends Component {
                 <h4>Select a Room:</h4>
             {
                 this.state.rooms.map( room =>    
-                <div key={room.key}>
+                <div 
+                key={room.key}
+                className={styles.container}>
+                    <div className={styles.blank}></div>
                     <p 
                     className={styles.roomNumber}
                     onClick={() => this.props.selectRoom(room)}
                     >{room.name}</p>
                     <button 
                         className={styles.deleteRoomButton}
-                        onClick={() => this.removeRoom(room)}>-</button>
+                        onClick={() => this.removeRoom(room)}>delete</button>
                 </div>
                 )
             }
-                <form 
-                    className={styles.createForm}
-                    onSubmit={(e) => { e.preventDefault(); this.handleSubmit(this.state.newRoom); }}>
-                    Create a New Room:
-                    <input id={styles.roomTxt} type="text" onChange={this.updateInput} value={this.state.newRoom}></input>
-                    <input className={styles.roomSub} type="submit"></input>
-                </form>
+                <div className={styles.formContainer}>
+                    <form 
+                        className={styles.createForm}
+                        onSubmit={(e) => { e.preventDefault(); this.handleSubmit(this.state.newRoom); }}>
+                        <p>Create a New Room:</p>
+                        <input className={styles.roomTxt} type="text" onChange={this.updateInput} value={this.state.newRoom}></input>
+                        <input className={styles.roomSub} type="submit"></input>
+                    </form>
+                </div>
             </div>
             
             

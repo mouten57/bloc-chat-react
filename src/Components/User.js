@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "./User.css";
+import styles from "./User.css";
 
 class User extends Component {
     componentDidMount() {
@@ -18,7 +18,7 @@ class User extends Component {
 
     render () {
         return(
-            <div id="sign-in-out">
+            <div className={styles.signInOut}>
                 <button onClick={() => this.props.user ? this.signOut(): this.signIn()}>
                         {this.props.user ? "Sign Out" : "Sign In"}
                 </button>

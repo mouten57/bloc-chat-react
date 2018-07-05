@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styles from './MessageList.css';
+import { isTSTypeAliasDeclaration } from 'babel-types';
 
 class MessageList extends Component {
   constructor(props){
@@ -35,6 +36,11 @@ class MessageList extends Component {
           this.updateDisplayedMessages(this.props.activeRoom);
           this.scrollToBottom();
           });
+      });
+      this.messagesRef.on('child_removed', snapshot  => {
+        this.setState({ allMessages: this.state.allMessages.filter( message => message.key !== snapshot.key )  }, () => {
+          this.updateDisplayedMessages( this.props.activeRoom )
+        });
       });
       this.scrollToBottom();
     }
@@ -100,6 +106,19 @@ class MessageList extends Component {
       () => this.scrollToBottom()
     );
   }
+
+  deleteMessage=(message)=> {
+      let array = [...this.state.roomMessages];
+      var index = array.indexOf(message);
+      array.splice(index, 1);
+      this.setState({roomMessages: array})
+      this.messagesRef.child(message.key).remove().then(() => {
+          // check the browser console to see if this works... or throws an error if it is not a promise
+          console.log(`${message.content} removed`);
+         // if it is a promise we now could call remove on the messages
+       });
+    }
+  
   render () {
     return(
       <div className={styles.messageListDiv}>
@@ -107,11 +126,19 @@ class MessageList extends Component {
           {/* //map roomMessages instead of allMessages */}
             {this.state.roomMessages.map( message => 
             <li key={message.key}>
-                <div className="content">
-                    {message.content}<br/>
-                    From: {message.username}<br/>
-                    Time: {message.sentAt}<br/>
-                    <br/>
+                <div className = {styles.message}>
+                    <div className={styles.content}>{message.content}</div>
+                    <div className={styles.from}>From: {message.username}</div>
+                    <div className={styles.time}>
+                      <div className={styles.left}></div>
+                      <div className={styles.sentAt}>{message.sentAt}</div>
+                      <button 
+                      className={styles.deleteButton}
+                      onClick={() => this.deleteMessage(message)}
+                      >delete</button>
+                    
+                    </div>       
+                  
                 </div>
             </li>
           )}
@@ -119,11 +146,15 @@ class MessageList extends Component {
           <div ref={(el) => (this.messagesEnd = el)}/>
           </ul>
           <div className={styles.messageBar}>
-          <form className={styles.messageForm}
-            onSubmit={ (e) => { e.preventDefault(); this.handleSubmitNewMessage(this.state.newMessage) }}>
-          <input className={styles.messageInput} type="text" onChange={this.handleMessageInput} value={this.state.newMessage} placeholder="Enter a message.." />
-          <input type="submit" className={styles.msgSub}/>
-        </form>
+            <div className={styles.formWrapper}>
+              <div className={styles.formLeft}></div>
+              
+                <form className={styles.messageForm}
+                onSubmit={ (e) => { e.preventDefault(); this.handleSubmitNewMessage(this.state.newMessage) }}>
+                <input className={styles.messageInput} type="text" onChange={this.handleMessageInput} value={this.state.newMessage} placeholder="Enter a message.." />
+                </form>
+                <input type="submit" className={styles.msgSub}/>
+            </div>
       </div>
     </div>
     );

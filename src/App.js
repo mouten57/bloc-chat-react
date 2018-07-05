@@ -53,14 +53,15 @@ class App extends Component {
         </div>
         <div>
           <div className={styles.currentRoomDisplay}>
-            <ul className={styles.topDisplay}>
-              <li className={styles.currentRoom}>Current Room: <p className={styles.roomTitle}>{this.state.activeRoom ? this.state.activeRoom.name:''}</p></li>
-              <li className={styles.usernameDisplay}>Username: <b>{this.state.user ? this.state.user.displayName : "Guest" }</b></li>
-            </ul>
-              <User 
-                firebase = {firebase}
-                setUser = {this.setUser}
-                user = {this.state.user} />
+              <ul className={styles.topDisplay}>
+                <li className={styles.currentRoom}><b>Current Room</b>: <p className={styles.roomTitle}>{this.state.activeRoom ? this.state.activeRoom.name:''}</p></li>
+                <li className={styles.usernameDisplay}><b>Username</b>: <p className={styles.userTitle}>{this.state.user ? this.state.user.displayName : "Guest" }</p></li>
+              </ul>
+                <User 
+                  className={styles.user}
+                  firebase = {firebase}
+                  setUser = {this.setUser}
+                  user = {this.state.user} />   
             </div>
           </div>
         <div>
