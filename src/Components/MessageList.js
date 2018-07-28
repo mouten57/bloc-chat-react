@@ -114,7 +114,7 @@ class MessageList extends Component {
       this.setState({roomMessages: array})
       this.messagesRef.child(message.key).remove().then(() => {
           // check the browser console to see if this works... or throws an error if it is not a promise
-          console.log(`${message.content} removed`);
+          console.log(`${message.content} removed + test!`);
          // if it is a promise we now could call remove on the messages
        });
     }
