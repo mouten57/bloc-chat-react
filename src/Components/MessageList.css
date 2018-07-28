@@ -115,8 +115,9 @@
 @media only screen and (max-width: 600px) {
     .messageBar {
         margin-top: 388px;
+        width: 75%;
     }
-   
-    .messageForm{width:83%;}
-    .messageBar{width: 100%;}
+    .messageForm{width:55%;}
+    .messageInput{width:50%}
+    .msgSub {width:60px}
 }
