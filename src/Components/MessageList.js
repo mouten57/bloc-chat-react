@@ -147,16 +147,14 @@ class MessageList extends Component {
           </ul>
           <div className={styles.messageBar}>
             <div className={styles.formWrapper}>
-              <div className={styles.formLeft}></div>
-              
                 <form className={styles.messageForm}
                 onSubmit={ (e) => { e.preventDefault(); this.handleSubmitNewMessage(this.state.newMessage) }}>
                 <input className={styles.messageInput} type="text" onChange={this.handleMessageInput} value={this.state.newMessage} placeholder="Enter a message.." />
-                </form>
                 <input type="submit" className={styles.msgSub}/>
+                </form>
             </div>
+          </div>
       </div>
-    </div>
     );
   }
 }

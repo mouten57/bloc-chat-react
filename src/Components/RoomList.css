@@ -2,12 +2,14 @@
     text-decoration: underline;
 } */
 .sideNav  {
-    width: 25%;
-    height: 100%;
+    width:25%;
+    height: inherit;
     background-color: lightGrey;
-    position: fixed!important;
+    position: absolute;
     z-index: 1;
     overflow: auto;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
   }
   .sideNav h4 {
     text-decoration: underline; 
@@ -18,13 +20,7 @@
     justify-content: space-between;
     font-size: 15px;
     font-family: 'Roboto', sans-serif;
-    max-width: 155px;
-    margin: 0 auto;
   }
-
-  .blank {
-    width: ;
-  }  
 
   .roomNumber {
     align-self: center;
@@ -48,16 +44,15 @@
 .deleteRoomButton:hover {
     color: black;
     cursor: pointer; 
+
 }
 .formContainer {
-    height: 70px;
+    height: 80px;
     margin: 0 auto;
-    width: 25%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    position: relative;
+    top: 10px;
     padding-top: 5px;
-    display: inline-block;
+ 
     background-color: lightGrey;
     z-index: 10;
     font-family: 'Roboto', sans-serif;
@@ -67,20 +62,22 @@
 .formContainer p {
     font-size: 12px;
     margin: 0 auto;
+    
 }
   
 .roomTxt {
       padding: 1px;
       margin-top: 5px; 
       margin-bottom: 5px;
-      max-width: 150px;
+      width: 80px;
+      margin: 0 auto;
+      width: 80%;
   }
-  .createForm {
-    text-align: center;
-}
+
   .roomSub {
-      display: block;
-      margin: 5px auto;
+      width: inherit;
+      position: relative;
+      margin: 0 auto;
       padding-bottom: 5px;
       font-family: 'Roboto', sans-serif;
   }
