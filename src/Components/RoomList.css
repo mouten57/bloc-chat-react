@@ -1,90 +1,89 @@
 /* .side-nav-header {
     text-decoration: underline;
 } */
-.sideNav  {
-    width:25%;
-    height: inherit;
-    background-color: lightGrey;
-    position: absolute;
-    z-index: 1;
-    overflow: auto;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-  }
-  .sideNav h4 {
-    text-decoration: underline; 
-  }
+.sideNav {
+  width: 25%;
+  height: inherit;
+  background-color: lightGrey;
+  position: absolute;
+  z-index: 1;
+  overflow: auto;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.sideNav h4 {
+  text-decoration: underline;
+}
 
-  .container {
-    display: flex;
-    justify-content: space-between;
-    font-size: 15px;
-    font-family: 'Roboto', sans-serif;
-  }
+.container {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  font-family: 'Roboto', sans-serif;
+}
 
-  .roomNumber {
-    align-self: center;
-    margin: 0;
-  }
+.roomNumber {
+  align-self: center;
+  margin: 0;
+  font-size: 2vmin;
+}
 .roomNumber:hover {
-    font-weight: bolder;
-    color: rgb(0, 59, 187);
-    cursor: pointer;
-    text-decoration: underline;
+  font-weight: bolder;
+  color: rgb(0, 59, 187);
+  cursor: pointer;
+  text-decoration: underline;
 }
 .deleteRoomButton {
-    background-color: rgb(243, 196, 196);
-    color: white;
-    border-radius: 6px;
-    padding: 2px 5px;
-    font-size: 11px;
-    margin-top: 5px;
-    height: 20px;
+  background-color: rgb(243, 196, 196);
+  color: white;
+  border-radius: 6px;
+  padding: 2px 5px;
+  font-size: 11px;
+  margin-top: 5px;
+  height: 20px;
 }
 .deleteRoomButton:hover {
-    color: black;
-    cursor: pointer; 
-
+  color: black;
+  cursor: pointer;
 }
 .formContainer {
-    height: 80px;
-    margin: 0 auto;
-    position: relative;
-    top: 10px;
-    padding-top: 5px;
- 
-    background-color: lightGrey;
-    z-index: 10;
-    font-family: 'Roboto', sans-serif;
-    overflow: auto;
+  height: 80px;
+  margin: 0 auto;
+  position: relative;
+  top: 10px;
+  padding-top: 5px;
+
+  background-color: lightGrey;
+  z-index: 10;
+  font-family: 'Roboto', sans-serif;
+  overflow: auto;
 }
 
 .formContainer p {
-    font-size: 12px;
-    margin: 0 auto;
-    
+  font-size: 12px;
+  margin: 0 auto;
 }
-  
+
 .roomTxt {
-      padding: 1px;
-      margin-top: 5px; 
-      margin-bottom: 5px;
-      width: 80px;
-      margin: 0 auto;
-      width: 80%;
-  }
+  padding: 1px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 80px;
+  margin: 0 auto;
+  width: 80%;
+}
 
-  .roomSub {
-      width: inherit;
-      position: relative;
-      margin: 0 auto;
-      padding-bottom: 5px;
-      font-family: 'Roboto', sans-serif;
-  }
+.roomSub {
+  width: inherit;
+  position: relative;
+  margin: 0 auto;
+  padding-bottom: 5px;
+  font-family: 'Roboto', sans-serif;
+}
 
-  .roomSub:hover {
-    color: white;
-    background-color: grey;
-    cursor: pointer;
-    border-radius: 4px;
-  }
+.roomSub:hover {
+  color: white;
+  background-color: grey;
+  cursor: pointer;
+  border-radius: 4px;
+}
