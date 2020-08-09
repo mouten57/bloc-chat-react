@@ -1,0 +1,112 @@
+.messageListDiv {
+  height: 70vh;
+  /* text-align: center; */
+  margin-left: 25%;
+  width: 75%;
+  overflow: auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  /* justify-content: space-around;
+    flex-flow: row wrap; */
+}
+.messageList {
+  width: 100%;
+  margin: 0 auto;
+  list-style-type: none;
+  padding-left: 0;
+  overflow: hidden;
+}
+.messageBar {
+  position: fixed;
+  height: 7vh;
+  margin-top: 75vh;
+  text-align: center;
+  background-image: linear-gradient(to bottom right, #f0f8ff, white);
+  margin-bottom: 0;
+  width: 75%;
+  max-width: 488px;
+}
+.message {
+  margin-top: 10px;
+}
+
+.content {
+  font-family: "Dosis", sans-serif;
+  font-size: 20px;
+  font-weight: bolder;
+}
+.from {
+  text-transform: capitalize;
+  color: grey;
+  font-size: 14px;
+  font-family: "Dosis", sans-serif;
+}
+.time {
+  display: flex;
+  color: grey;
+  justify-content: space-between;
+  font-size: 14px;
+  font-family: "Dosis", sans-serif;
+}
+.left {
+  width: 25px;
+}
+.sentAt {
+  align-self: center;
+}
+
+.deleteButton {
+  width: 30px;
+  margin-right: 5px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+.deleteButton:hover {
+  cursor: pointer;
+  color: red;
+}
+
+.formWrapper {
+  position: relative;
+  float: bottom;
+  min-width: 410px;
+  max-width: 410px;
+  margin: 0 auto;
+}
+
+.messageInput {
+  resize: vertical;
+  width: 60%;
+  float: left;
+  height: 40px;
+  margin-top: 15px;
+  margin-left: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.msgSub {
+  height: 40px;
+  margin-top: 15px;
+  width: 20%;
+  border-radius: 5px;
+}
+
+.msgSub:hover {
+  color: white;
+  background-color: grey;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .messageForm {
+    width: 55%;
+  }
+  .messageInput {
+    width: 50%;
+  }
+  .msgSub {
+    width: 60px;
+  }
+}
