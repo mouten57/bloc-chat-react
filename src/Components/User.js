@@ -1,5 +1,6 @@
-import React, { Component } from "react";
-import styles from "../Styles/User.css";
+import React, { Component } from 'react';
+import { Button } from 'semantic-ui-react';
+import styles from '../Styles/User.css';
 
 class User extends Component {
   componentDidMount() {
@@ -19,11 +20,11 @@ class User extends Component {
   render() {
     return (
       <div className={styles.signInOut}>
-        <button
+        <Button
           onClick={() => (this.props.user ? this.signOut() : this.signIn())}
         >
-          {this.props.user ? "Sign Out" : "Sign In"}
-        </button>
+          {this.props.user ? 'Sign Out' : 'Sign In'}
+        </Button>
       </div>
     );
   }
