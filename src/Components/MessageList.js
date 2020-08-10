@@ -1,23 +1,23 @@
-import React, { Component } from "react";
-import styles from "../Styles/MessageList.module.css";
-import { Icon, Button, Input, Comment } from "semantic-ui-react";
-import sample_person from "../Images/sample_person.jpeg";
+import React, { Component } from 'react';
+import styles from '../Styles/MessageList.module.css';
+import { Icon, Button, Input, Comment } from 'semantic-ui-react';
+import sample_person from '../Images/sample_person.jpeg';
 class MessageList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       allMessages: [],
       roomMessages: [],
-      newMessage: "",
+      newMessage: '',
     };
-    this.messagesRef = this.props.firebase.database().ref("messages/");
+    this.messagesRef = this.props.firebase.database().ref('messages/');
   }
   //triggered when parent state changes (prop that's passed changes)
   componentWillReceiveProps(nextProps) {
     this.updateDisplayedMessages(nextProps.activeRoom);
   }
   componentDidMount() {
-    this.messagesRef.on("child_added", (snapshot) => {
+    this.messagesRef.on('child_added', (snapshot) => {
       //events registered using 'on' method
       //snapshot.val recieves snapshot object (actual data)
       const message = snapshot.val();
@@ -34,7 +34,7 @@ class MessageList extends Component {
         this.scrollToBottom();
       });
     });
-    this.messagesRef.on("child_removed", (snapshot) => {
+    this.messagesRef.on('child_removed', (snapshot) => {
       this.setState(
         {
           allMessages: this.state.allMessages.filter(
@@ -49,32 +49,32 @@ class MessageList extends Component {
     this.scrollToBottom();
   }
   scrollToBottom = () => {
-    this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    this.messagesEnd.scrollIntoView({ behavior: 'smooth' });
   };
 
   convertTimestamp = (timestamp) => {
     const month = {
-      "01": "Jan",
-      "02": "Feb",
-      "03": "Mar",
-      "04": "Apr",
-      "05": "May",
-      "06": "June",
-      "07": "July",
-      "08": "Aug",
-      "09": "Sep",
-      "10": "Oct",
-      "11": "Nov",
-      "12": "Dec",
+      '01': 'Jan',
+      '02': 'Feb',
+      '03': 'Mar',
+      '04': 'Apr',
+      '05': 'May',
+      '06': 'June',
+      '07': 'July',
+      '08': 'Aug',
+      '09': 'Sep',
+      '10': 'Oct',
+      '11': 'Nov',
+      '12': 'Dec',
     };
     var d = new Date(timestamp), // Convert the passed timestamp to milliseconds
       yyyy = d.getFullYear(),
-      mm = ("0" + (d.getMonth() + 1)).slice(-2), // Months are zero based. Add leading 0.
-      dd = ("0" + d.getDate()).slice(-2), // Add leading 0.
+      mm = ('0' + (d.getMonth() + 1)).slice(-2), // Months are zero based. Add leading 0.
+      dd = ('0' + d.getDate()).slice(-2), // Add leading 0.
       hh = d.getHours(),
       h = hh,
-      min = ("0" + d.getMinutes()).slice(-2), // Add leading 0.
-      ampm = "AM",
+      min = ('0' + d.getMinutes()).slice(-2), // Add leading 0.
+      ampm = 'AM',
       time;
 
     //     if (hh > 12) {
@@ -90,13 +90,13 @@ class MessageList extends Component {
     // ie: 2013-02-18, 8:35 AM
     time =
       month[mm] +
-      " " +
+      ' ' +
       dd +
       " '" +
       yyyy.toString().slice(2, 4) +
-      " at " +
+      ' at ' +
       h +
-      ":" +
+      ':' +
       min;
     return time;
   };
@@ -105,18 +105,18 @@ class MessageList extends Component {
       content: newMessage,
       sentAt: this.convertTimestamp(Date.now()),
       roomId: this.props.activeRoom.key,
-      username: this.props.user ? this.props.user.displayName : "Guest",
-      userID: this.props.user ? this.props.user.uid : "None",
+      username: this.props.user ? this.props.user.displayName : 'Guest',
+      userID: this.props.user ? this.props.user.uid : 'None',
       userPhotoUrl: this.props.user ? this.props.user.photoURL : sample_person,
     };
     var newMessageKey = this.messagesRef.push().key;
     var updates = {};
-    updates["/messages/" + newMessageKey] = submitData;
+    updates['/messages/' + newMessageKey] = submitData;
     if (submitData.content.length >= 1) {
-      this.setState({ newMessage: "" });
+      this.setState({ newMessage: '' });
       return this.props.firebase.database().ref().update(updates);
     } else {
-      alert("Message must be at least 1 character.");
+      alert('Message must be at least 1 character.');
     }
   };
   handleMessageInput = (event) => {
@@ -154,15 +154,19 @@ class MessageList extends Component {
   };
 
   render() {
-    console.log(this.state.roomMessages);
     return (
-      <div className={styles.messageListDiv}>
+      <div
+        className={styles.messageListDiv}
+        width={this.props.messageWidth}
+        style={{ marginLeft: this.props.messageMargin }}
+      >
         <Comment.Group
           style={{
-            marginLeft: "10px",
-            marginRight: "10px",
-            width: "100%",
-            maxWidth: "100%",
+            marginLeft: '10px',
+            marginRight: '10px',
+            marginTop: '5px',
+            width: '100%',
+            maxWidth: '100%',
           }}
         >
           {/* <ul className={styles.messageList}> */}
@@ -173,10 +177,10 @@ class MessageList extends Component {
               style={{
                 marginLeft: this.props?.user
                   ? this.props.user.uid === message.userID
-                    ? "50%"
-                    : "0"
-                  : "0",
-                maxWidth: "230px",
+                    ? '50%'
+                    : '0'
+                  : '0',
+                maxWidth: '230px',
               }}
             >
               <Comment.Avatar as="a" src={message.userPhotoUrl} />
@@ -188,9 +192,9 @@ class MessageList extends Component {
                     <Icon
                       name="delete"
                       style={{
-                        marginRight: "10px",
+                        marginRight: '10px',
 
-                        float: "right",
+                        float: 'right',
                       }}
                       onClick={() => this.deleteMessage(message)}
                       className={styles.deleteButton}
@@ -206,7 +210,13 @@ class MessageList extends Component {
         </Comment.Group>
         <div ref={(el) => (this.messagesEnd = el)} />
         {/* </ul> */}
-        <div className={styles.messageBar}>
+        <div
+          className={styles.messageBar}
+          width={this.props.messageWidth}
+          style={{
+            maxWidth: this.props.messageWidth == '95%' ? '618px' : '488px',
+          }}
+        >
           <div className={styles.formWrapper}>
             <form
               className={styles.messageForm}
@@ -224,7 +234,7 @@ class MessageList extends Component {
               />
               <Button
                 type="submit"
-                style={{ marginTop: "15px" }}
+                style={{ marginTop: '15px' }}
                 className={styles.msgSub}
               >
                 Send

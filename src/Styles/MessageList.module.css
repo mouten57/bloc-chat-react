@@ -1,8 +1,7 @@
 .messageListDiv {
   height: 70vh;
   /* text-align: center; */
-  margin-left: 25%;
-  width: 75%;
+
   overflow: auto;
   position: relative;
   z-index: 1;
@@ -32,7 +31,7 @@
 }
 
 .content {
-  font-family: "Dosis", sans-serif;
+  font-family: 'Dosis', sans-serif;
   font-size: 20px;
   font-weight: bolder;
 }
@@ -40,14 +39,14 @@
   text-transform: capitalize;
   color: grey;
   font-size: 14px;
-  font-family: "Dosis", sans-serif;
+  font-family: 'Dosis', sans-serif;
 }
 .time {
   display: flex;
   color: grey;
   justify-content: space-between;
   font-size: 14px;
-  font-family: "Dosis", sans-serif;
+  font-family: 'Dosis', sans-serif;
 }
 .left {
   width: 25px;

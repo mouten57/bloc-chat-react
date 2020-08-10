@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import styles from "../Styles/RoomList.module.css";
-import { Input, Button, Icon } from "semantic-ui-react";
+import React, { Component } from 'react';
+import styles from '../Styles/RoomList.module.css';
+import { Input, Button, Icon } from 'semantic-ui-react';
 
 class RoomList extends Component {
   constructor(props) {
@@ -8,13 +8,15 @@ class RoomList extends Component {
 
     this.state = {
       rooms: [],
-      newRoom: "",
+      newRoom: '',
       newRoomValidator: true,
+      roomWidth: '5%',
+      showSideBar: false,
     };
-    this.roomsRef = this.props.firebase.database().ref("rooms");
+    this.roomsRef = this.props.firebase.database().ref('rooms');
   }
   componentDidMount() {
-    this.roomsRef.on("child_added", (snapshot) => {
+    this.roomsRef.on('child_added', (snapshot) => {
       //events registered using 'on' method
       //snapshot.val recieves snapshot (room object data)
       const room = snapshot.val();
@@ -42,7 +44,7 @@ class RoomList extends Component {
       //index 0: {name: 'room1', key:'1'}
       ////////
     });
-    this.roomsRef.on("child_removed", (snapshot) => {
+    this.roomsRef.on('child_removed', (snapshot) => {
       this.setState({
         rooms: this.state.rooms.filter((room) => room.key !== snapshot.key),
       });
@@ -65,7 +67,7 @@ class RoomList extends Component {
     };
     var newRoomKey = this.roomsRef.push().key;
     var updates = {};
-    updates["/rooms/" + newRoomKey] = submitData;
+    updates['/rooms/' + newRoomKey] = submitData;
     //updates the room that was submitted to activeRoom
     let onSubmitNewRoom = {
       name: newRoom,
@@ -75,14 +77,14 @@ class RoomList extends Component {
       ...this.state.rooms.map((room) => room.name.toUpperCase()),
     ];
     if (roomNames.includes(newRoom.toUpperCase())) {
-      alert("Room name is already taken.");
-      this.setState({ newRoom: "" });
+      alert('Room name is already taken.');
+      this.setState({ newRoom: '' });
     } else if (newRoom.length > 12) {
-      alert("Please create a room name shorter than 12 characters.");
-      this.setState({ newRoom: "" });
+      alert('Please create a room name shorter than 12 characters.');
+      this.setState({ newRoom: '' });
     } else {
       this.props.selectRoom(onSubmitNewRoom);
-      this.setState({ newRoom: "" });
+      this.setState({ newRoom: '' });
       return this.props.firebase.database().ref().update(updates);
     }
   };
@@ -91,7 +93,7 @@ class RoomList extends Component {
   // if true call the delete
   // if false nothing
   removeRoom = (room) => {
-    this.roomsRef = this.props.firebase.database().ref("rooms");
+    this.roomsRef = this.props.firebase.database().ref('rooms');
     if (this.state.rooms.length < 2) {
       return;
     }
@@ -109,7 +111,7 @@ class RoomList extends Component {
           if (message.roomId === room.key) {
             this.props.firebase
               .database()
-              .ref("messages/")
+              .ref('messages/')
               .child(message.key)
               .remove();
           }
@@ -121,10 +123,29 @@ class RoomList extends Component {
       ? this.props.selectRoom(this.state.rooms[index + 1])
       : this.props.selectRoom(this.state.rooms[index - 1]);
   };
+  showSideBar = (show) => {
+    console.log(show);
+    if (show) {
+      this.setState({ roomWidth: '25%', showSideBar: true });
+      this.props.setMessageWidth('75%');
+    } else {
+      this.setState({ roomWidth: '5%', showSideBar: false });
+      this.props.setMessageWidth('95%');
+    }
+  };
+
   render() {
     return (
-      <div className={styles.sideNav} style={{ textAlign: "center" }}>
-        <div className={styles.formContainer}>
+      <div
+        className={styles.sideNav}
+        style={{ textAlign: 'center', width: this.state.roomWidth }}
+        onMouseEnter={() => this.showSideBar(true)}
+        onMouseLeave={() => this.showSideBar(false)}
+      >
+        <div
+          className={styles.formContainer}
+          style={{ display: this.state.showSideBar ? 'inherit' : 'none' }}
+        >
           <form
             className={styles.createForm}
             onSubmit={(e) => {
@@ -133,7 +154,7 @@ class RoomList extends Component {
             }}
           >
             <p
-              style={{ color: "black", fontSize: "15px", textAlign: "center" }}
+              style={{ color: 'black', fontSize: '15px', textAlign: 'center' }}
             >
               Create a New Room:
             </p>
@@ -144,7 +165,7 @@ class RoomList extends Component {
               value={this.state.newRoom}
             ></Input>
             <Button
-              style={{ marginTop: "5px" }}
+              style={{ marginTop: '5px' }}
               className={styles.roomSub}
               type="submit"
               disabled={this.state.newRoomValidator}
@@ -154,25 +175,29 @@ class RoomList extends Component {
           </form>
         </div>
 
-        <h4>Select a Room:</h4>
-        {this.state.rooms.map((room) => (
-          <div key={room.key} className={styles.container}>
-            <div className={styles.blank}></div>
-            <p
-              className={styles.roomNumber}
-              onClick={() => this.props.selectRoom(room)}
-            >
-              {room.name}
-            </p>
-            <Icon
-              name="delete"
-              size="small"
-              style={{ marginRight: "10px", marginTop: "6px" }}
-              className={styles.deleteRoomButton}
-              onClick={() => this.removeRoom(room)}
-            />
-          </div>
-        ))}
+        <h4 style={{ display: this.state.showSideBar ? 'inherit' : 'none' }}>
+          Select a Room:
+        </h4>
+        <span style={{ display: this.state.showSideBar ? 'inherit' : 'none' }}>
+          {this.state.rooms.map((room) => (
+            <div key={room.key} className={styles.container}>
+              <div className={styles.blank}></div>
+              <p
+                className={styles.roomNumber}
+                onClick={() => this.props.selectRoom(room)}
+              >
+                {room.name}
+              </p>
+              <Icon
+                name="delete"
+                size="small"
+                style={{ marginRight: '10px', marginTop: '6px' }}
+                className={styles.deleteRoomButton}
+                onClick={() => this.removeRoom(room)}
+              />
+            </div>
+          ))}
+        </span>
       </div>
     );
   }

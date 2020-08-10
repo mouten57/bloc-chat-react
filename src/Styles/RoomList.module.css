@@ -3,11 +3,12 @@
 } */
 .sideNav {
   width: 25%;
+  display: inherit;
   height: inherit;
   background-image: linear-gradient(to top left, lightgrey, white);
   position: absolute;
   z-index: 1;
-  overflow: auto;
+  overflow: hidden;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
@@ -19,7 +20,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 15px;
-  font-family: "Dosis", sans-serif;
+  font-family: 'Dosis', sans-serif;
 }
 
 .roomNumber {
@@ -52,8 +53,8 @@
   padding-top: 5px;
   background-image: linear-gradient(from bottom right, #f0f8ff, white);
   z-index: 10;
-  font-family: "Dosis", sans-serif;
-  overflow: auto;
+  font-family: 'Dosis', sans-serif;
+  overflow: hidden;
 }
 
 .formContainer p {
@@ -75,5 +76,5 @@
   width: inherit;
   position: relative;
   margin: 0 auto;
-  font-family: "Helvetica Neu", sans-serif;
+  font-family: 'Helvetica Neu', sans-serif;
 }
